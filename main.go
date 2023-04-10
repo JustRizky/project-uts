@@ -1,23 +1,18 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Mahasiswa struct {
-	id   int
-	name string
-	npm  string
+	ID   int
+	Nama string
+	NPM  string
+	Next *Mahasiswa
 }
 
-type Dosen struct {
-	Id   int
-	Name string
-	Nip  string
-}
-
-type linkedList struct {
-	container  Mahasiswa
-	container2 Dosen
-	next       *linkedList
+type LinkedList struct {
+	Head *Mahasiswa
 }
 
 func menu1() {
@@ -39,26 +34,49 @@ func menu2() {
 	fmt.Println("Masukkan Pilihan (1-7): ")
 }
 
-func view() {
-
+func (list *LinkedList) InsertDepan(mahasiswa *Mahasiswa) {
+	if list.Head == nil {
+		list.Head = mahasiswa
+	} else {
+		tempMahasiswa := list.Head
+		for tempMahasiswa.Next != nil {
+			tempMahasiswa = tempMahasiswa.Next
+		}
+		tempMahasiswa.Next = mahasiswa
+	}
 }
 
-func insertDepan() {
-
-}
-
-func insertBelakang(linkedList *linkedList, mahasiswa Mahasiswa) {
-
-}
-
-func delete() {
-
-}
-
-func update() {
-
+func (list *LinkedList) ViewAll() {
+	if list.Head == nil {
+		fmt.Println("Data Kosong!")
+	} else {
+		tempMahasiswa := list.Head
+		for tempMahasiswa != nil {
+			fmt.Println("___________________________")
+			fmt.Println("ID   : ", tempMahasiswa.ID)
+			fmt.Println("Nama : ", tempMahasiswa.Nama)
+			fmt.Println("NPM  : ", tempMahasiswa.NPM)
+			tempMahasiswa = tempMahasiswa.Next
+		}
+	}
 }
 
 func main() {
+	list := &LinkedList{}
 
+	mahasiswa1 := &Mahasiswa{
+		ID:   0,
+		Nama: "Rizky",
+		NPM:  "01",
+	}
+	mahasiswa2 := &Mahasiswa{
+		ID:   1,
+		Nama: "Muhammad",
+		NPM:  "02",
+	}
+
+	list.InsertDepan(mahasiswa1)
+	list.InsertDepan(mahasiswa2)
+
+	list.ViewAll()
 }
