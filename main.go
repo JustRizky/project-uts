@@ -4,79 +4,123 @@ import (
 	"fmt"
 )
 
-type Mahasiswa struct {
+type Menu struct {
+	ID      int
+	Makanan string
+	Minuman string
+	Next    *Menu
+}
+
+type Kasir struct {
 	ID   int
 	Nama string
-	NPM  string
-	Next *Mahasiswa
+	Nik  int
+	Next *Kasir
+}
+
+type Customer struct {
+	ID   int
+	Nama string
+	Np   int
+	Next *Customer
 }
 
 type LinkedList struct {
-	Head *Mahasiswa
+	Head *Menu
+}
+
+type LinkedListKSR struct {
+	head *Kasir
+}
+
+type LinkedListCS struct {
+	head *Customer
 }
 
 func menu1() {
 	fmt.Println("----------------")
-	fmt.Println("1. Mahasiswa")
-	fmt.Println("2. Dosen")
+	fmt.Println("1. Kasir")
+	fmt.Println("2. Customer")
 	fmt.Println("3. Exit")
 }
 
 func menu2() {
 	fmt.Println("----------------")
-	fmt.Println("1. Insert Depan")
-	fmt.Println("2. Insert Belakang")
-	fmt.Println("3. Update")
-	fmt.Println("4. Delete")
-	fmt.Println("5. View")
-	fmt.Println("6. View By Id")
-	fmt.Println("7. Exit")
-	fmt.Println("Masukkan Pilihan (1-7): ")
+	fmt.Println("1. Insert")
+	fmt.Println("2. Update")
+	fmt.Println("3. Delete")
+	fmt.Println("4. View")
+	fmt.Println("5. View By Id")
+	fmt.Println("6. Exit")
+	fmt.Println("Masukkan Pilihan (1-6): ")
 }
 
-func (list *LinkedList) InsertDepan(mahasiswa *Mahasiswa) {
-	if list.Head == nil {
-		list.Head = mahasiswa
+func (list *LinkedListKSR) Insert1(ksr *Kasir) {
+	if list.head == nil {
+		list.head = ksr
 	} else {
-		tempMahasiswa := list.Head
-		for tempMahasiswa.Next != nil {
-			tempMahasiswa = tempMahasiswa.Next
+		tempksr := list.head
+		for tempksr.Next != nil {
+			tempksr = tempksr.Next
 		}
-		tempMahasiswa.Next = mahasiswa
 	}
 }
 
-func (list *LinkedList) ViewAll() {
-	if list.Head == nil {
+func (list *LinkedListCS) Insert2(cs *Customer) {
+	if list.head == nil {
+		list.head = cs
+	} else {
+		tempCs := list.head
+		for tempCs.Next != nil {
+			tempCs = tempCs.Next
+		}
+		tempCs.Next = cs
+	}
+}
+
+func (list *LinkedListCS) ViewAllCustomer() {
+	if list.head == nil {
 		fmt.Println("Data Kosong!")
 	} else {
-		tempMahasiswa := list.Head
-		for tempMahasiswa != nil {
+		tempRestoran := list.head
+		for tempRestoran != nil {
 			fmt.Println("___________________________")
-			fmt.Println("ID   : ", tempMahasiswa.ID)
-			fmt.Println("Nama : ", tempMahasiswa.Nama)
-			fmt.Println("NPM  : ", tempMahasiswa.NPM)
-			tempMahasiswa = tempMahasiswa.Next
+			fmt.Println("ID   : ", tempRestoran.Np)
+			fmt.Println("Nama : ", tempRestoran.Nama)
+			tempRestoran = tempRestoran.Next
+		}
+	}
+}
+
+func (list *LinkedListKSR) ViewAllKasir() {
+	if list.head == nil {
+		fmt.Println("Data Kosong!")
+	} else {
+		tempRestoran := list.head
+		for tempRestoran != nil {
+			fmt.Println("___________________________")
+			fmt.Println("ID   : ", tempRestoran.Nik)
+			fmt.Println("Nama : ", tempRestoran.Nama)
+			tempRestoran = tempRestoran.Next
 		}
 	}
 }
 
 func main() {
-	list := &LinkedList{}
+	list2 := &LinkedListCS{}
+	list3 := &LinkedListKSR{}
 
-	mahasiswa1 := &Mahasiswa{
-		ID:   0,
-		Nama: "Rizky",
-		NPM:  "01",
+	customer1 := &Customer{
+		Nama: "Pikri",
+		Np:   456,
 	}
-	mahasiswa2 := &Mahasiswa{
-		ID:   1,
-		Nama: "Muhammad",
-		NPM:  "02",
+	kasir := &Kasir{
+		Nama: "aku",
+		Nik:  07606,
 	}
 
-	list.InsertDepan(mahasiswa1)
-	list.InsertDepan(mahasiswa2)
-
-	list.ViewAll()
+	list3.Insert1(kasir)
+	list2.Insert2(customer1)
+	list3.ViewAllKasir()
+	list2.ViewAllCustomer()
 }
