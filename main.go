@@ -37,6 +37,10 @@ type LinkedListCS struct {
 	head *Customer
 }
 
+type LinkedListMenu struct {
+	head *Menu
+}
+
 func menu1() {
 	fmt.Println("----------------")
 	fmt.Println("1. Kasir")
@@ -55,7 +59,7 @@ func menu2() {
 	fmt.Println("Masukkan Pilihan (1-6): ")
 }
 
-func (list *LinkedListKSR) Insert1(ksr *Kasir) {
+func (list *LinkedListKSR) InsertKSR(ksr *Kasir) {
 	if list.head == nil {
 		list.head = ksr
 	} else {
@@ -63,10 +67,11 @@ func (list *LinkedListKSR) Insert1(ksr *Kasir) {
 		for tempksr.Next != nil {
 			tempksr = tempksr.Next
 		}
+		tempksr.Next = ksr
 	}
 }
 
-func (list *LinkedListCS) Insert2(cs *Customer) {
+func (list *LinkedListCS) InsertCS(cs *Customer) {
 	if list.head == nil {
 		list.head = cs
 	} else {
@@ -76,14 +81,31 @@ func (list *LinkedListCS) Insert2(cs *Customer) {
 		}
 		tempCs.Next = cs
 	}
+
+}
+
+func (list *LinkedListMenu) InsertMenu(menu *Menu) {
+	if list.head == nil {
+		list.head = menu
+	} else {
+		tempMenu := list.head
+		for tempMenu.Next != nil {
+			tempMenu = tempMenu.Next
+		}
+		tempMenu.Next = menu
+	}
+
 }
 
 func (list *LinkedListCS) ViewAllCustomer() {
 	if list.head == nil {
-		fmt.Println("Data Kosong!")
+		fmt.Println("")
 	} else {
 		tempRestoran := list.head
+		fmt.Println("")
+		fmt.Println("Customer :")
 		for tempRestoran != nil {
+
 			fmt.Println("___________________________")
 			fmt.Println("ID   : ", tempRestoran.Np)
 			fmt.Println("Nama : ", tempRestoran.Nama)
@@ -94,10 +116,13 @@ func (list *LinkedListCS) ViewAllCustomer() {
 
 func (list *LinkedListKSR) ViewAllKasir() {
 	if list.head == nil {
-		fmt.Println("Data Kosong!")
+		fmt.Println("")
 	} else {
 		tempRestoran := list.head
+		fmt.Println("")
+		fmt.Println("Kasir :")
 		for tempRestoran != nil {
+
 			fmt.Println("___________________________")
 			fmt.Println("ID   : ", tempRestoran.Nik)
 			fmt.Println("Nama : ", tempRestoran.Nama)
@@ -106,21 +131,67 @@ func (list *LinkedListKSR) ViewAllKasir() {
 	}
 }
 
+func (list *LinkedListMenu) ViewAllMenu() {
+	if list.head == nil {
+		fmt.Println("")
+	} else {
+		tempRestoran := list.head
+		fmt.Println("")
+		fmt.Println("Makanan :")
+		for tempRestoran != nil {
+
+			fmt.Println("___________________________")
+			fmt.Println("ID   : ", tempRestoran.ID)
+			fmt.Println("Makanan : ", tempRestoran.Makanan)
+			fmt.Println("Minuman : ", tempRestoran.Minuman)
+			tempRestoran = tempRestoran.Next
+		}
+	}
+}
+
 func main() {
 	list2 := &LinkedListCS{}
 	list3 := &LinkedListKSR{}
+	list4 := &LinkedListMenu{}
+
+	kasir1 := &Kasir{
+		Nama: "rizky",
+		Nik:  01,
+	}
+	kasir2 := &Kasir{
+		Nama: "fikri",
+		Nik:  02,
+	}
 
 	customer1 := &Customer{
-		Nama: "Pikri",
-		Np:   456,
+		Nama: "rangga",
+		Np:   99,
 	}
-	kasir := &Kasir{
-		Nama: "aku",
-		Nik:  07606,
+	customer2 := &Customer{
+		Nama: "Pandu",
+		Np:   100,
 	}
 
-	list3.Insert1(kasir)
-	list2.Insert2(customer1)
+	kasir3 := &Kasir{
+		Nama: "Panji",
+		Nik:  03,
+	}
+
+	menu1 := &Menu{
+		ID:      01,
+		Makanan: "Nasi Ayam",
+		Minuman: "Jus",
+	}
+
+	list3.InsertKSR(kasir1)
+	list3.InsertKSR(kasir2)
+	list3.InsertKSR(kasir3)
+	list4.InsertMenu(menu1)
+
+	list2.InsertCS(customer1)
+	list2.InsertCS(customer2)
+
 	list3.ViewAllKasir()
 	list2.ViewAllCustomer()
+	list4.ViewAllMenu()
 }
