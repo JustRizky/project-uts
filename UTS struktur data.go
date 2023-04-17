@@ -12,14 +12,12 @@ type Menu struct {
 }
 
 type Kasir struct {
-	ID   int
 	Nama string
 	Nik  int
 	Next *Kasir
 }
 
 type Customer struct {
-	ID   int
 	Nama string
 	Np   int
 	Next *Customer
@@ -147,25 +145,23 @@ func(list *LinkedListMenu) UpdatenamaMENU(oldMENU *Menu, newMAKAN string, newMIN
 //DELETE
 
 func (list *LinkedListKSR) DeleteKSR(ID int) {
-	// jika node kosong
 	if list.head == nil {
 		fmt.Println("Kasir tidak ditemukan")
 		return
 	}
 
-	// jika node 
 	if list.head.Nik == ID {
 		list.head = list.head.Next
 		return
 	}
 
-	currKasir := list.head
-	for currKasir.Next != nil {
-		if currKasir.Next.Nik == ID {
-			currKasir.Next = currKasir.Next.Next
+	prevKasir := list.head
+	for prevKasir.Next != nil {
+		if prevKasir.Next.Nik == ID {
+			prevKasir.Next = prevKasir.Next.Next
 			return
 		}
-		currKasir = currKasir.Next
+		prevKasir = prevKasir.Next
 	}
 
 	fmt.Println("Kasir tidak ditemukan")
@@ -182,13 +178,13 @@ func (list *LinkedListCS) DeleteCS(ID int) {
 		return
 	}
 
-	currCustomer := list.head
-	for currCustomer.Next != nil {
-		if currCustomer.Next.Np == ID {
-			currCustomer.Next = currCustomer.Next.Next
+	prevCustomer := list.head
+	for prevCustomer.Next != nil {
+		if prevCustomer.Next.Np == ID {
+			prevCustomer.Next = prevCustomer.Next.Next
 			return
 		}
-		currCustomer = currCustomer.Next
+		prevCustomer = prevCustomer.Next
 	}
 
 	fmt.Println("Customer tidak ditemukan")
@@ -205,13 +201,13 @@ func (list *LinkedListMenu) DeleteMenu(ID int) {
 		return
 	}
 
-	currMenu := list.head
-	for currMenu.Next != nil {
-		if currMenu.Next.ID == ID {
-			currMenu.Next = currMenu.Next.Next
+	prevMenu := list.head
+	for prevMenu.Next != nil {
+		if prevMenu.Next.ID == ID {
+			prevMenu.Next = prevMenu.Next.Next
 			return
 		}
-		currMenu = currMenu.Next
+		prevMenu = prevMenu.Next
 	}
 
 	fmt.Println("Menu tidak ditemukan")
@@ -229,7 +225,7 @@ func (list *LinkedListCS) ViewAllCustomer() {
 		for tempRestoran != nil {
 
 			fmt.Println("_________")
-			fmt.Println("ID   : ", tempRestoran.Np)
+			fmt.Println("NP   : ", tempRestoran.Np)
 			fmt.Println("Nama : ", tempRestoran.Nama)
 			tempRestoran = tempRestoran.Next
 		}
@@ -246,7 +242,7 @@ func (list *LinkedListKSR) ViewAllKasir() {
 		for tempRestoran != nil {
 
 			fmt.Println("_________")
-			fmt.Println("ID   : ", tempRestoran.Nik)
+			fmt.Println("NIK   : ", tempRestoran.Nik)
 			fmt.Println("Nama : ", tempRestoran.Nama)
 			tempRestoran = tempRestoran.Next
 		}
@@ -269,6 +265,53 @@ func (list *LinkedListMenu) ViewAllMenu() {
 			tempRestoran = tempRestoran.Next
 		}
 	}
+}
+
+//VIEW BY ID
+
+func (list *LinkedListKSR) viewByIDKSR(id int){
+	curr:=list.head
+		for curr != nil{
+			if curr.Nik == id{
+				fmt.Println()
+				fmt.Println()
+				fmt.Println("VIEW BY NIK KASIR YANG DI TUJU:")
+				fmt.Println("NAMA :",curr.Nama,"\n NIK :",curr.Nik)
+				return
+			}
+		curr = curr.Next	
+		}
+	fmt.Println("NIK DENGAN NOMOR ",id, "TIDAK ADA YAA")
+}
+
+func (list *LinkedListCS) viewByIDCS(np int){
+	curr:=list.head
+		for curr != nil{
+			if curr.Np == np {
+				fmt.Println()
+				fmt.Println()
+				fmt.Println("VIEW BY NP CUSTOMER YANG DI TUJU:")
+				fmt.Println("NAMA :",curr.Nama,"\n NIK :",curr.Np)
+				return
+			}
+		curr = curr.Next	
+		}
+	fmt.Println("NIK DENGAN NOMOR ", np , "TIDAK ADA YAA")
+}
+
+func (list *LinkedListMenu) viewByIDMENU(id int){
+	curr:=list.head
+		for curr != nil{
+			if curr.ID == id {
+				fmt.Println()
+				fmt.Println()
+				fmt.Println("VIEW BY ID MENU YANG DI TUJU:")
+				fmt.Println("ID   : ",curr.ID,"\nNAMA :",curr.Makanan,"& MINUMAN :",curr.Minuman)
+				return
+			}
+		curr = curr.Next	
+		}
+	fmt.Println("NIK DENGAN NOMOR ", id , "TIDAK ADA YAA")
 }
 
 func main() {
@@ -337,7 +380,15 @@ func main() {
 	list3.UpdatenamaKSR(kasir2 , "RIZKI IMOET")
 	list4.UpdatenamaMENU(menu2, "SEGO JAGUNG" , "ES DEGAN")
 	list2.UpdatenamaCS(customer2 , "RANGGA GANTENG")
+
+
 	list3.ViewAllKasir()
 	list2.ViewAllCustomer()
 	list4.ViewAllMenu()
+
+
+	list3.viewByIDKSR(2)
+	list2.viewByIDCS(100)
+	list4.viewByIDMENU(2)
+	
 }
