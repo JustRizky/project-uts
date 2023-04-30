@@ -2,7 +2,15 @@ package main
 
 import (
 	"fmt"
+	"os"
+	"os/exec"
 )
+
+func clear() {
+	cmd := exec.Command("cmd", "/c", "cls")
+	cmd.Stdout = os.Stdout
+	cmd.Run()
+}
 
 func menuUtama() int {
 	var input int
@@ -38,14 +46,14 @@ type Menu struct {
 }
 
 type Kasir struct {
+	Id   int
 	Nama string
-	Nik  int
 	Next *Kasir
 }
 
 type Customer struct {
+	Id   int
 	Nama string
-	Np   int
 	Next *Customer
 }
 
@@ -75,14 +83,14 @@ func (list *LinkedListMenu) InsertMenu(menu *Menu) {
 
 }
 
-func (list *LinkedListMenu) UpdatenamaMENU(oldMENU *Menu, newMAKAN string, newMINUM string) {
+func (list *LinkedListMenu) UpdatenamaMENU(Id int, newMAKAN string, newMINUM string) {
 	if list.head == nil {
 		fmt.Println("Tidak ada menu!")
 	}
 
 	curr := list.head
 	for curr != nil {
-		if curr == oldMENU {
+		if curr.Id == Id {
 			curr.Makanan = newMAKAN
 			curr.Minuman = newMINUM
 			return
@@ -144,7 +152,7 @@ func (list *LinkedListMenu) viewByIDMENU(Id int) {
 		}
 		curr = curr.Next
 	}
-	fmt.Println("NIK DENGAN NOMOR ", Id, "TIDAK ADA!")
+	fmt.Println("ID DENGAN NOMOR ", Id, "TIDAK ADA!")
 }
 
 // Kasir
@@ -160,14 +168,14 @@ func (list *LinkedListKasir) InsertKSR(ksr *Kasir) {
 	}
 }
 
-func (list *LinkedListKasir) UpdatenamaKSR(oldKSR *Kasir, newKSR string) {
+func (list *LinkedListKasir) UpdatenamaKSR(Id int, newKSR string) {
 	if list.head == nil {
 		fmt.Println("Tidak ada kasir!")
 	}
 
 	curr := list.head
 	for curr != nil {
-		if curr == oldKSR {
+		if curr.Id == Id {
 			curr.Nama = newKSR
 			return
 		}
@@ -181,14 +189,14 @@ func (list *LinkedListKasir) DeleteKSR(ID int) {
 		return
 	}
 
-	if list.head.Nik == ID {
+	if list.head.Id == ID {
 		list.head = list.head.Next
 		return
 	}
 
 	prevKasir := list.head
 	for prevKasir.Next != nil {
-		if prevKasir.Next.Nik == ID {
+		if prevKasir.Next.Id == ID {
 			prevKasir.Next = prevKasir.Next.Next
 			return
 		}
@@ -208,7 +216,7 @@ func (list *LinkedListKasir) ViewAllKasir() {
 		for tempRestoran != nil {
 
 			fmt.Println("_________")
-			fmt.Println("NIK   : ", tempRestoran.Nik)
+			fmt.Println("ID   : ", tempRestoran.Id)
 			fmt.Println("Nama : ", tempRestoran.Nama)
 			tempRestoran = tempRestoran.Next
 		}
@@ -218,16 +226,16 @@ func (list *LinkedListKasir) ViewAllKasir() {
 func (list *LinkedListKasir) viewByIDKSR(id int) {
 	curr := list.head
 	for curr != nil {
-		if curr.Nik == id {
+		if curr.Id == id {
 			fmt.Println()
 			fmt.Println()
 			fmt.Println("VIEW BY NIK KASIR YANG DI TUJU:")
-			fmt.Println("NAMA :", curr.Nama, "\n NIK :", curr.Nik)
+			fmt.Println("NAMA :", curr.Nama, "\n ID :", curr.Id)
 			return
 		}
 		curr = curr.Next
 	}
-	fmt.Println("NIK DENGAN NOMOR ", id, "TIDAK ADA!")
+	fmt.Println("ID DENGAN NOMOR ", id, "TIDAK ADA!")
 }
 
 // Customer
@@ -244,14 +252,14 @@ func (list *LinkedListCustomer) InsertCS(cs *Customer) {
 
 }
 
-func (list *LinkedListCustomer) UpdatenamaCS(oldCS *Customer, newCS string) {
+func (list *LinkedListCustomer) UpdatenamaCS(Id int, newCS string) {
 	if list.head == nil {
 		fmt.Println("Tidak ada customer!")
 	}
 
 	curr := list.head
 	for curr != nil {
-		if curr == oldCS {
+		if curr.Id == Id {
 			curr.Nama = newCS
 			return
 		}
@@ -265,14 +273,14 @@ func (list *LinkedListCustomer) DeleteCS(ID int) {
 		return
 	}
 
-	if list.head.Np == ID {
+	if list.head.Id == ID {
 		list.head = list.head.Next
 		return
 	}
 
 	prevCustomer := list.head
 	for prevCustomer.Next != nil {
-		if prevCustomer.Next.Np == ID {
+		if prevCustomer.Next.Id == ID {
 			prevCustomer.Next = prevCustomer.Next.Next
 			return
 		}
@@ -292,26 +300,26 @@ func (list *LinkedListCustomer) ViewAllCustomer() {
 		for tempRestoran != nil {
 
 			fmt.Println("_________")
-			fmt.Println("NP   : ", tempRestoran.Np)
+			fmt.Println("ID   : ", tempRestoran.Id)
 			fmt.Println("Nama : ", tempRestoran.Nama)
 			tempRestoran = tempRestoran.Next
 		}
 	}
 }
 
-func (list *LinkedListCustomer) viewByIDCS(np int) {
+func (list *LinkedListCustomer) viewByIDCS(id int) {
 	curr := list.head
 	for curr != nil {
-		if curr.Np == np {
+		if curr.Id == id {
 			fmt.Println()
 			fmt.Println()
 			fmt.Println("VIEW BY NP CUSTOMER YANG DI TUJU:")
-			fmt.Println("NAMA :", curr.Nama, "\n NIK :", curr.Np)
+			fmt.Println("NAMA :", curr.Nama, "\n ID :", curr.Id)
 			return
 		}
 		curr = curr.Next
 	}
-	fmt.Println("NIK DENGAN NOMOR ", np, "TIDAK ADA!")
+	fmt.Println("ID DENGAN NOMOR ", id, "TIDAK ADA!")
 }
 
 func main() {
@@ -324,68 +332,159 @@ menuUtama:
 	for pilihanMenuUtama != 4 {
 		switch pilihanMenuUtama {
 		case 1: //Kasir
+			clear()
+		menuSecondary1:
 			var pilihanMenuKedua int = menuKedua()
-			for pilihanMenuKedua != 7 {
-				switch pilihanMenuKedua {
-				case 1: //Insert
-					break
-				case 2: //Update
-					break
-				case 3: //Delete
-					break
-				case 4: // View
-					listKasir.ViewAllKasir()
-					break
-				case 5: // View By Id
-					break
-				case 6: // Back
-					goto menuUtama
-				}
-			}
+			var namaKasir string
+			var namaBaruKasir string
+			var idKasir int
+			var jumlahKasir int
 
+			if pilihanMenuKedua == 1 {
+				fmt.Print("Masukkan Jumlah Kasir: ")
+				fmt.Scan(&jumlahKasir)
+				for i := 1; i <= jumlahKasir; i++ {
+					fmt.Print("Masukkan Nama Kasir: ")
+					fmt.Scan(&namaKasir)
+					fmt.Print("Masukkan ID Kasir: ")
+					fmt.Scan(&idKasir)
+
+					kasir := &Kasir{
+						Id:   idKasir,
+						Nama: namaKasir,
+					}
+					listKasir.InsertKSR(kasir)
+				}
+				goto menuSecondary1
+			} else if pilihanMenuKedua == 2 {
+				fmt.Print("Masukkan ID yang akan diupdate: ")
+				fmt.Scan(&idKasir)
+				fmt.Print("Masukkan Nama yang baru: ")
+				fmt.Scan(&namaBaruKasir)
+				listKasir.UpdatenamaKSR(idKasir, namaBaruKasir)
+				goto menuSecondary1
+			} else if pilihanMenuKedua == 3 {
+				fmt.Print("Masukkan ID yang akan Dihapus: ")
+				fmt.Scan(&idKasir)
+				listKasir.DeleteKSR(idKasir)
+				goto menuSecondary1
+			} else if pilihanMenuKedua == 4 {
+				listKasir.ViewAllKasir()
+				goto menuSecondary1
+			} else if pilihanMenuKedua == 5 {
+				fmt.Print("Masukkan ID yang Dicari: ")
+				fmt.Scan(&idKasir)
+				listKasir.viewByIDKSR(idKasir)
+				goto menuSecondary1
+			} else if pilihanMenuKedua == 6 {
+				goto menuUtama
+			}
 			break
 		case 2: //Customer
+			clear()
+		menuSecondary2:
 			var pilihanMenuKedua int = menuKedua()
-			for pilihanMenuKedua != 7 {
-				switch pilihanMenuKedua {
-				case 1: //Insert
-					break
-				case 2: //Update
-					break
-				case 3: //Delete
-					break
-				case 4: // View
-					ListCustomer.ViewAllCustomer()
-					break
-				case 5: // View By Id
-					break
-				case 6: // Back
-					goto menuUtama
+			var namaCustomer string
+			var namaBaruCustomer string
+			var idCustomer int
+			var jumlahCustomer int
+
+			if pilihanMenuKedua == 1 {
+				fmt.Print("Masukkan Jumlah Customer: ")
+				fmt.Scan(&jumlahCustomer)
+				for i := 1; i <= jumlahCustomer; i++ {
+					fmt.Print("Masukkan Nama Customer: ")
+					fmt.Scan(&namaCustomer)
+					fmt.Print("Masukkan ID Customer: ")
+					fmt.Scan(&idCustomer)
+
+					customer := &Customer{
+						Id:   idCustomer,
+						Nama: namaCustomer,
+					}
+					ListCustomer.InsertCS(customer)
 				}
+				goto menuSecondary2
+			} else if pilihanMenuKedua == 2 {
+				fmt.Print("Masukkan ID yang akan diupdate: ")
+				fmt.Scan(&idCustomer)
+				fmt.Print("Masukkan Nama yang baru: ")
+				fmt.Scan(&namaBaruCustomer)
+				ListCustomer.UpdatenamaCS(idCustomer, namaBaruCustomer)
+				goto menuSecondary2
+			} else if pilihanMenuKedua == 3 {
+				fmt.Print("Masukkan ID yang akan Dihapus: ")
+				fmt.Scan(&idCustomer)
+				ListCustomer.DeleteCS(idCustomer)
+				goto menuSecondary2
+			} else if pilihanMenuKedua == 4 {
+				ListCustomer.ViewAllCustomer()
+				goto menuSecondary2
+			} else if pilihanMenuKedua == 5 {
+				fmt.Print("Masukkan ID yang Dicari: ")
+				fmt.Scan(&idCustomer)
+				ListCustomer.viewByIDCS(idCustomer)
+				goto menuSecondary2
+			} else if pilihanMenuKedua == 6 {
+				goto menuUtama
 			}
 			break
-
 		case 3: //Menu Makanan Dan Minuman
+			clear()
+		menuSecondary3:
 			var pilihanMenuKedua int = menuKedua()
-			for pilihanMenuKedua != 7 {
-				switch pilihanMenuKedua {
-				case 1: //Insert
-					break
-				case 2: //Update
-					break
-				case 3: //Delete
-					break
-				case 4: // View
-					listMenu.ViewAllMenu()
-					break
-				case 5: // View By Id
-					break
-				case 6: // Back
-					goto menuUtama
+			var namaMakanan string
+			var namaMinuman string
+			var namaBaruMakanan string
+			var namaBaruMinuman string
+			var idMenu int
+			var jumlahMenu int
+
+			if pilihanMenuKedua == 1 {
+				fmt.Print("Masukkan Jumlah Menu: ")
+				fmt.Scan(&jumlahMenu)
+				for i := 1; i <= jumlahMenu; i++ {
+					fmt.Print("Masukkan Nama Makanan: ")
+					fmt.Scan(&namaMakanan)
+					fmt.Print("Masukkan Nama Minuman: ")
+					fmt.Scan(&namaMinuman)
+					fmt.Print("Masukkan ID Customer: ")
+					fmt.Scan(&idMenu)
+
+					menu := &Menu{
+						Id:      idMenu,
+						Makanan: namaMakanan,
+						Minuman: namaMinuman,
+					}
+					listMenu.InsertMenu(menu)
 				}
+				goto menuSecondary3
+			} else if pilihanMenuKedua == 2 {
+				fmt.Print("Masukkan ID yang akan diupdate: ")
+				fmt.Scan(&idMenu)
+				fmt.Print("Masukkan Nama Makanan yang baru: ")
+				fmt.Scan(&namaBaruMakanan)
+				fmt.Print("Masukkan Nama Minuman yang baru: ")
+				fmt.Scan(&namaBaruMinuman)
+				listMenu.UpdatenamaMENU(idMenu, namaBaruMakanan, namaBaruMinuman)
+				goto menuSecondary3
+			} else if pilihanMenuKedua == 3 {
+				fmt.Print("Masukkan ID yang akan Dihapus: ")
+				fmt.Scan(&idMenu)
+				listMenu.DeleteMenu(idMenu)
+				goto menuSecondary3
+			} else if pilihanMenuKedua == 4 {
+				listMenu.ViewAllMenu()
+				goto menuSecondary3
+			} else if pilihanMenuKedua == 5 {
+				fmt.Print("Masukkan ID yang Dicari: ")
+				fmt.Scan(&idMenu)
+				listMenu.viewByIDMENU(idMenu)
+				goto menuSecondary3
+			} else if pilihanMenuKedua == 6 {
+				goto menuUtama
 			}
 			break
-
 		default:
 			fmt.Println("Pilihan tidak valid!")
 			break
