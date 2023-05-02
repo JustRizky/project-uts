@@ -110,13 +110,13 @@ func (list *LinkedListMenu) DeleteMenu(Id int) {
 		return
 	}
 
-	prevMenu := list.head
-	for prevMenu.Next != nil {
-		if prevMenu.Next.Id == Id {
-			prevMenu.Next = prevMenu.Next.Next
+	curr := list.head
+	for curr.Next != nil {
+		if curr.Next.Id == Id {
+			curr.Next = curr.Next.Next
 			return
 		}
-		prevMenu = prevMenu.Next
+		curr = curr.Next
 	}
 
 	fmt.Println("Menu tidak ditemukan!")
@@ -194,13 +194,13 @@ func (list *LinkedListKasir) DeleteKSR(ID int) {
 		return
 	}
 
-	prevKasir := list.head
-	for prevKasir.Next != nil {
-		if prevKasir.Next.Id == ID {
-			prevKasir.Next = prevKasir.Next.Next
+	currKasir := list.head
+	for currKasir.Next != nil {
+		if currKasir.Next.Id == ID {
+			currKasir.Next = currKasir.Next.Next
 			return
 		}
-		prevKasir = prevKasir.Next
+		currKasir = currKasir.Next
 	}
 
 	fmt.Println("Kasir tidak ditemukan!")
@@ -278,13 +278,13 @@ func (list *LinkedListCustomer) DeleteCS(ID int) {
 		return
 	}
 
-	prevCustomer := list.head
-	for prevCustomer.Next != nil {
-		if prevCustomer.Next.Id == ID {
-			prevCustomer.Next = prevCustomer.Next.Next
+	currCustomer := list.head
+	for currCustomer.Next != nil {
+		if currCustomer.Next.Id == ID {
+			currCustomer.Next = currCustomer.Next.Next
 			return
 		}
-		prevCustomer = prevCustomer.Next
+		currCustomer = currCustomer.Next
 	}
 
 	fmt.Println("Customer tidak ditemukan!")
