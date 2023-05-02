@@ -110,13 +110,13 @@ func (list *LinkedListMenu) DeleteMenu(Id int) {
 		return
 	}
 
-	curr := list.head
-	for curr.Next != nil {
-		if curr.Next.Id == Id {
-			curr.Next = curr.Next.Next
+	prevMenu := list.head
+	for prevMenu.Next != nil {
+		if prevMenu.Next.Id == Id {
+			prevMenu.Next = prevMenu.Next.Next
 			return
 		}
-		curr = curr.Next
+		prevMenu = prevMenu.Next
 	}
 
 	fmt.Println("Menu tidak ditemukan!")
