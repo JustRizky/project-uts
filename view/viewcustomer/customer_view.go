@@ -59,7 +59,7 @@ func ViewAllDataCustomer() {
 	customer := controller.ControllerViewAllCustomer()
 	for _, dataCustomer := range customer {
 		fmt.Println("__________________________________")
-		fmt.Println("Id Customer: 	", dataCustomer.Id)
+		fmt.Println("Id Customer: ", dataCustomer.Id)
 		fmt.Println("Nama Customer: ", dataCustomer.Nama)
 		fmt.Println("__________________________________")
 	}

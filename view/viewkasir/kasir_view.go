@@ -59,7 +59,7 @@ func ViewAllDataKasir() {
 	kasir := controller.ControllerViewAllKasir()
 	for _, dataKasir := range kasir {
 		fmt.Println("__________________________________")
-		fmt.Println("Id Kasir: 	 ", dataKasir.Id)
+		fmt.Println("Id Kasir: ", dataKasir.Id)
 		fmt.Println("Nama Kasir: ", dataKasir.Nama)
 		fmt.Println("__________________________________")
 	}
