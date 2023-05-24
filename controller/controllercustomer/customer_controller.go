@@ -6,12 +6,13 @@ import (
 	model "project-uts-mvc/model/modelcustomer"
 )
 
-func ControllerInsertCustomer(id int, nama string) error {
+func ControllerInsertCustomer(id, nomormeja int, nama string) error {
 	find := model.Search(id)
 	if find == nil {
 		data := entity.Customer{
-			Id:   id,
-			Nama: nama,
+			Id:        id,
+			Nama:      nama,
+			NomorMeja: nomormeja,
 		}
 		model.ModelInsertCustomer(data)
 		return nil
@@ -20,10 +21,11 @@ func ControllerInsertCustomer(id int, nama string) error {
 	return errors.New("<FAILED> Id Sudah Ada!")
 }
 
-func ControllerUpdateCustomer(id int, nama string) error {
+func ControllerUpdateCustomer(id, nomormeja int, nama string) error {
 	container := entity.Customer{
-		Id:   id,
-		Nama: nama,
+		Id:        id,
+		Nama:      nama,
+		NomorMeja: nomormeja,
 	}
 
 	if model.ModelUpdateCustomer(container) {

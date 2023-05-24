@@ -11,9 +11,9 @@ func InsertDataMenuRestoran() {
 	fmt.Print("Masukkan Id Menu: ")
 	fmt.Scan(&id)
 	fmt.Print("Masukkan Nama Makanan: ")
-	fmt.Scan(&makanan)
+	fmt.Scanln(&makanan)
 	fmt.Print("Masukkan Nama Minuman: ")
-	fmt.Scan(&minuman)
+	fmt.Scanln(&minuman)
 
 	err := controller.ControllerInsertMenuRestoran(id, makanan, minuman)
 	if err != nil {
@@ -29,9 +29,9 @@ func UpdateDataMenuRestoran() {
 	fmt.Print("Masukkan Id Menu Terbaru: ")
 	fmt.Scan(&id)
 	fmt.Print("Masukkan Nama Makanan Terbaru: ")
-	fmt.Scan(&makanan)
+	fmt.Scanln(&makanan)
 	fmt.Print("Masukkan Nama Minuman Terbaru: ")
-	fmt.Scan(&minuman)
+	fmt.Scanln(&minuman)
 
 	err := controller.ControllerUpdateMenuRestoran(id, makanan, minuman)
 	if err != nil {
@@ -43,7 +43,7 @@ func UpdateDataMenuRestoran() {
 
 func DeleteDataMenuRestoran() {
 	var id int
-	fmt.Println("Masukkan Id Menu Yang Akan Dihapus: ")
+	fmt.Print("Masukkan Id Menu Yang Akan Dihapus: ")
 	fmt.Scan(&id)
 	err := controller.ControllerDeleteMenuRestoran(id)
 	if err != nil {
@@ -56,21 +56,25 @@ func DeleteDataMenuRestoran() {
 func ViewAllDataMenuRestoran() {
 	menuRestoran := controller.ControllerViewAllMenuRestoran()
 	for _, dataMenuRestoran := range menuRestoran {
+		fmt.Println("__________________________________")
 		fmt.Println("Id Menu Restoran: ", dataMenuRestoran.Id)
 		fmt.Println("Makanan Customer: ", dataMenuRestoran.Makanan)
 		fmt.Println("Minuman Customer: ", dataMenuRestoran.Minuman)
+		fmt.Println("__________________________________")
 	}
 }
 
 func ViewByIdDataMenuRestoran() {
 	var id int
-	fmt.Println("Masukkan Id Menu Yang Ingin Dicari: ")
+	fmt.Print("Masukkan Id Menu Yang Ingin Dicari: ")
 	fmt.Scan(&id)
 	current := controller.ControllerViewByIdMenuRestoran(id)
 	if current != nil {
+		fmt.Println("__________________________________")
 		fmt.Println(current.Id)
 		fmt.Println(current.Makanan)
 		fmt.Println(current.Minuman)
+		fmt.Println("__________________________________")
 	} else {
 		fmt.Println("<FAILED> Data Dengan Id: ", id, "Tidak Ditemukan!")
 	}

@@ -8,12 +8,15 @@ import (
 func InsertDataCustomer() {
 	var id int
 	var nama string
+	var nomormeja int
 	fmt.Print("Masukkan Id Customer: ")
 	fmt.Scan(&id)
 	fmt.Print("Masukkan Nama Customer: ")
-	fmt.Scan(&nama)
+	fmt.Scanln(&nama)
+	fmt.Println("Masukkan Nomor Meja Customer: ")
+	fmt.Scan(&nomormeja)
 
-	err := controller.ControllerInsertCustomer(id, nama)
+	err := controller.ControllerInsertCustomer(id, nomormeja, nama)
 	if err != nil {
 		fmt.Println(err)
 	} else {
@@ -24,12 +27,15 @@ func InsertDataCustomer() {
 func UpdateDataCustomer() {
 	var id int
 	var nama string
+	var nomormeja int
 	fmt.Print("Masukkan Id Customer Terbaru: ")
 	fmt.Scan(&id)
 	fmt.Print("Masukkan Nama Customer Terbaru: ")
-	fmt.Scan(&nama)
+	fmt.Scanln(&nama)
+	fmt.Print("Masukkan Nomor Meja Customer Terbaru: ")
+	fmt.Scan(&nomormeja)
 
-	err := controller.ControllerUpdateCustomer(id, nama)
+	err := controller.ControllerUpdateCustomer(id, nomormeja, nama)
 	if err != nil {
 		fmt.Println(err)
 	} else {
@@ -39,7 +45,7 @@ func UpdateDataCustomer() {
 
 func DeleteDataCustomer() {
 	var id int
-	fmt.Println("Masukkan Id Customer Yang Akan Dihapus: ")
+	fmt.Print("Masukkan Id Customer Yang Akan Dihapus: ")
 	fmt.Scan(&id)
 	err := controller.ControllerDeleteCustomer(id)
 	if err != nil {
@@ -52,19 +58,23 @@ func DeleteDataCustomer() {
 func ViewAllDataCustomer() {
 	customer := controller.ControllerViewAllCustomer()
 	for _, dataCustomer := range customer {
-		fmt.Println("Id Customer: ", dataCustomer.Id)
+		fmt.Println("__________________________________")
+		fmt.Println("Id Customer: 	", dataCustomer.Id)
 		fmt.Println("Nama Customer: ", dataCustomer.Nama)
+		fmt.Println("__________________________________")
 	}
 }
 
 func ViewByIdDataCustomer() {
 	var id int
-	fmt.Println("Masukkan Id Customer Yang Ingin Dicari: ")
+	fmt.Print("Masukkan Id Customer Yang Ingin Dicari: ")
 	fmt.Scan(&id)
 	current := controller.ControllerViewByIdCustomer(id)
 	if current != nil {
+		fmt.Println("__________________________________")
 		fmt.Println(current.Id)
 		fmt.Println(current.Nama)
+		fmt.Println("__________________________________")
 	} else {
 		fmt.Println("<FAILED> Data Dengan Id: ", id, "Tidak Ditemukan!")
 	}

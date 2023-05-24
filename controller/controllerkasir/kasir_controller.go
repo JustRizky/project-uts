@@ -6,12 +6,13 @@ import (
 	model "project-uts-mvc/model/modelkasir"
 )
 
-func ControllerInsertKasir(id int, nama string) error {
+func ControllerInsertKasir(id, umur int, nama string) error {
 	find := model.Search(id)
 	if find == nil {
 		data := entity.Kasir{
 			Id:   id,
 			Nama: nama,
+			Umur: umur,
 		}
 		model.ModelInsertKasir(data)
 		return nil
@@ -20,10 +21,11 @@ func ControllerInsertKasir(id int, nama string) error {
 	return errors.New("<FAILED> Id Sudah Ada!")
 }
 
-func ControllerUpdateKasir(id int, nama string) error {
+func ControllerUpdateKasir(id, umur int, nama string) error {
 	container := entity.Kasir{
 		Id:   id,
 		Nama: nama,
+		Umur: umur,
 	}
 
 	if model.ModelUpdateKasir(container) {

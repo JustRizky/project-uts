@@ -1,8 +1,9 @@
 package entity
 
 type Customer struct {
-	Id   int
-	Nama string
+	Id        int
+	Nama      string
+	NomorMeja int
 }
 
 type LinkedListCustomer struct {
