@@ -71,9 +71,9 @@ func ViewByIdDataMenuRestoran() {
 	current := controller.ControllerViewByIdMenuRestoran(id)
 	if current != nil {
 		fmt.Println("__________________________________")
-		fmt.Println(current.Id)
-		fmt.Println(current.Makanan)
-		fmt.Println(current.Minuman)
+		fmt.Println("Id Menu Restoran: ", current.Id)
+		fmt.Println("Makanan Customer: ", current.Makanan)
+		fmt.Println("Minuman Customer: ", current.Minuman)
 		fmt.Println("__________________________________")
 	} else {
 		fmt.Println("<FAILED> Data Dengan Id: ", id, "Tidak Ditemukan!")

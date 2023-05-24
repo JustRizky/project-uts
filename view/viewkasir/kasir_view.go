@@ -61,6 +61,7 @@ func ViewAllDataKasir() {
 		fmt.Println("__________________________________")
 		fmt.Println("Id Kasir: ", dataKasir.Id)
 		fmt.Println("Nama Kasir: ", dataKasir.Nama)
+		fmt.Println("Umur Kasir: ", dataKasir.Umur)
 		fmt.Println("__________________________________")
 	}
 }
@@ -72,8 +73,9 @@ func ViewByIdDataKasir() {
 	current := controller.ControllerViewByIdKasir(id)
 	if current != nil {
 		fmt.Println("__________________________________")
-		fmt.Println(current.Id)
-		fmt.Println(current.Nama)
+		fmt.Println("Id Kasir: ", current.Id)
+		fmt.Println("Nama Kasir: ", current.Nama)
+		fmt.Println("Umur Kasir: ", current.Umur)
 		fmt.Println("__________________________________")
 	} else {
 		fmt.Println("<FAILED> Data Dengan Id: ", id, "Tidak Ditemukan!")
