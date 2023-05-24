@@ -3,9 +3,10 @@ package entity
 type Kasir struct {
 	Id   int
 	Nama string
-	Next *Kasir
+	Umur int
 }
 
 type LinkedListKasir struct {
-	head *Kasir
+	Data Kasir
+	Next *LinkedListKasir
 }
